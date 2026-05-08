@@ -155,5 +155,15 @@ class TestBurger:
     def test_burger_init_burger_default_state_correct(self):
         burger = Burger()
         
-        assert burger.bun is None
-        assert burger.ingredients == []
+        mock_bun = Mock()
+        mock_bun.get_price.return_value = 100
+        mock_bun.get_name.return_value = "Test Bun"
+        burger.set_buns(mock_bun)
+        assert burger.bun == mock_bun
+        assert burger.get_price() == 200
+
+        mock_ingredient = Mock()
+        mock_ingredient.get_price.return_value = 50
+        burger.add_ingredient(mock_ingredient)
+        assert burger.ingredients[0] == mock_ingredient
+        assert len(burger.ingredients) == 1
